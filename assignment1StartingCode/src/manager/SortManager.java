@@ -231,9 +231,9 @@ public class SortManager
      *                      "h" for height, "v" for volume, and "a" for base area.
      *                      Determines how the shapes are compared and the output format after sorting.
      */
-    private static void sortAndBenchmark(Shape[] shapesCopy, String sortAlgorithm, String compareType) 
+    private static void sortAndBenchmark(Shape[] shapes, String sortAlgorithm, String compareType) 
     {
-        //Shape[] shapesCopy = shapes.clone();
+        Shape[] shapesCopy = shapes.clone();
     	
         long startTime = System.nanoTime();
 

@@ -42,9 +42,6 @@ public class Sort
                 {
                     // Swap array[j] and array[j + 1]
                 	swap(array, j, j + 1);
-//                    T temp = array[j];
-//                    array[j] = array[j + 1];
-//                    array[j + 1] = temp;
                     swapped = true;
                 }
             }
@@ -73,9 +70,6 @@ public class Sort
                 {
                     // Swap array[j] and array[j + 1]
                 	swap(array, j, j + 1);
-//                    T temp = array[j];
-//                    array[j] = array[j + 1];
-//                    array[j + 1] = temp;
                     swapped = true;
                 }
             }
@@ -157,9 +151,6 @@ public class Sort
 	            }
 	        }
 	        swap(array, minIndex, i);
-//	        T temp = array[minIndex];
-//	        array[minIndex] = array[i];
-//	        array[i] = temp;
 	    }
 	}
 	
@@ -185,9 +176,6 @@ public class Sort
 	            }
 	        }
 	        swap(array, minIndex, i);
-//	        T temp = array[minIndex];
-//	        array[minIndex] = array[i];
-//	        array[i] = temp;
 	    }
 	}
 	
@@ -309,15 +297,9 @@ public class Sort
 	        {
 	            i++;
 	            swap(array, i, j);
-//	            T temp = array[i];
-//	            array[i] = array[j];
-//	            array[j] = temp;
 	        }
 	    }
 	    swap(array, i + 1, high);
-//	    T temp = array[i + 1];
-//	    array[i + 1] = array[high];
-//	    array[high] = temp;
 	    return i + 1;
 	}
 	
@@ -358,15 +340,9 @@ public class Sort
 	        {
 	            i++;
 	            swap(array, i, j);
-//	            T temp = array[i];
-//	            array[i] = array[j];
-//	            array[j] = temp;
 	        }
 	    }
 	    swap(array, i + 1, high);
-//	    T temp = array[i + 1];
-//	    array[i + 1] = array[high];
-//	    array[high] = temp;
 	    return i + 1;
 	}
 
