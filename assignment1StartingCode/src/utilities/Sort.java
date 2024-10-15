@@ -13,12 +13,12 @@ import java.util.Comparator;
  * 
  * ## Sorting Algorithms References
 
--**Bubble Sort**: https://www.geeksforgeeks.org/bubble-sort-algorithm/?ref=shm.
--**Insertion Sort**: https://www.geeksforgeeks.org/insertion-sort-algorithm/?ref=shm.
--**Selection Sort**: https://www.geeksforgeeks.org/selection-sort-algorithm-2/?ref=shm.
--**Merge Sort**: https://www.geeksforgeeks.org/merge-sort/?ref=shm.
--**Quick Sort**: https://www.geeksforgeeks.org/quick-sort-algorithm/?ref=shm.
--**Heap Sort**: https://www.geeksforgeeks.org/heap-sort/.
+ **Bubble Sort**: https://www.geeksforgeeks.org/bubble-sort-algorithm/?ref=shm.
+ **Insertion Sort**: https://www.geeksforgeeks.org/insertion-sort-algorithm/?ref=shm.
+ **Selection Sort**: https://www.geeksforgeeks.org/selection-sort-algorithm-2/?ref=shm.
+ **Merge Sort**: https://www.geeksforgeeks.org/merge-sort/?ref=shm.
+ **Quick Sort**: https://www.geeksforgeeks.org/quick-sort-algorithm/?ref=shm.
+ **Heap Sort**: https://www.geeksforgeeks.org/heap-sort/.
  * 
  */
 public class Sort 
@@ -41,9 +41,10 @@ public class Sort
                 if (array[j].compareTo(array[j + 1]) > 0) 
                 {
                     // Swap array[j] and array[j + 1]
-                    T temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
+                	swap(array, j, j + 1);
+//                    T temp = array[j];
+//                    array[j] = array[j + 1];
+//                    array[j + 1] = temp;
                     swapped = true;
                 }
             }
@@ -71,9 +72,10 @@ public class Sort
                 if (c.compare(array[j], array[j + 1]) > 0) 
                 {
                     // Swap array[j] and array[j + 1]
-                    T temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
+                	swap(array, j, j + 1);
+//                    T temp = array[j];
+//                    array[j] = array[j + 1];
+//                    array[j + 1] = temp;
                     swapped = true;
                 }
             }
@@ -154,9 +156,10 @@ public class Sort
 	                minIndex = j;
 	            }
 	        }
-	        T temp = array[minIndex];
-	        array[minIndex] = array[i];
-	        array[i] = temp;
+	        swap(array, minIndex, i);
+//	        T temp = array[minIndex];
+//	        array[minIndex] = array[i];
+//	        array[i] = temp;
 	    }
 	}
 	
@@ -181,9 +184,10 @@ public class Sort
 	                minIndex = j;
 	            }
 	        }
-	        T temp = array[minIndex];
-	        array[minIndex] = array[i];
-	        array[i] = temp;
+	        swap(array, minIndex, i);
+//	        T temp = array[minIndex];
+//	        array[minIndex] = array[i];
+//	        array[i] = temp;
 	    }
 	}
 	
@@ -304,14 +308,16 @@ public class Sort
 	        if (array[j].compareTo(pivot) <= 0) 
 	        {
 	            i++;
-	            T temp = array[i];
-	            array[i] = array[j];
-	            array[j] = temp;
+	            swap(array, i, j);
+//	            T temp = array[i];
+//	            array[i] = array[j];
+//	            array[j] = temp;
 	        }
 	    }
-	    T temp = array[i + 1];
-	    array[i + 1] = array[high];
-	    array[high] = temp;
+	    swap(array, i + 1, high);
+//	    T temp = array[i + 1];
+//	    array[i + 1] = array[high];
+//	    array[high] = temp;
 	    return i + 1;
 	}
 	
@@ -351,14 +357,16 @@ public class Sort
 	        if (c.compare(array[j], pivot) <= 0) 
 	        {
 	            i++;
-	            T temp = array[i];
-	            array[i] = array[j];
-	            array[j] = temp;
+	            swap(array, i, j);
+//	            T temp = array[i];
+//	            array[i] = array[j];
+//	            array[j] = temp;
 	        }
 	    }
-	    T temp = array[i + 1];
-	    array[i + 1] = array[high];
-	    array[high] = temp;
+	    swap(array, i + 1, high);
+//	    T temp = array[i + 1];
+//	    array[i + 1] = array[high];
+//	    array[high] = temp;
 	    return i + 1;
 	}
 

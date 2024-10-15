@@ -231,9 +231,10 @@ public class SortManager
      *                      "h" for height, "v" for volume, and "a" for base area.
      *                      Determines how the shapes are compared and the output format after sorting.
      */
-    private static void sortAndBenchmark(Shape[] shapes, String sortAlgorithm, String compareType) 
+    private static void sortAndBenchmark(Shape[] shapesCopy, String sortAlgorithm, String compareType) 
     {
-        Shape[] shapesCopy = shapes.clone();
+        //Shape[] shapesCopy = shapes.clone();
+    	
         long startTime = System.nanoTime();
 
         // Determine the comparator based on the compare type
@@ -283,7 +284,7 @@ public class SortManager
                     System.out.println("Invalid compare type. Use 'v' for volume, 'h' for height, or 'a' for base area.");
                     return;
             }
-
+           
             // Perform the selected sort using the comparator
             switch (sortAlgorithm.toLowerCase()) 
             {
@@ -309,11 +310,12 @@ public class SortManager
                     System.out.println("Invalid sort method. Use 'b', 's', 'i', 'm', 'q', or 'z'.");
                     return;
             }
+            
         }
 
         long endTime = System.nanoTime();
         long durationMillis = (endTime - startTime) / 1_000_000; // Convert to milliseconds
-
+        
         // Output the sorted data and benchmark results
         printSortedResults(shapesCopy, compareType);
         System.out.println(sortAlgorithm + " run time was: " + durationMillis + " milliseconds.");
