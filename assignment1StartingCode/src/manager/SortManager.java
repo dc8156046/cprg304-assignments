@@ -261,7 +261,7 @@ public class SortManager
                     Sort.quickSort(shapesCopy); 
                     break;
                 case "z":
-                    Sort.binaryInsertionSort(shapesCopy); 
+                    Sort.heapSort(shapesCopy); 
                     break;
                 default:
                     System.out.println("Invalid sort method. Use 'b', 's', 'i', 'm', 'q', or 'z'.");
@@ -303,7 +303,7 @@ public class SortManager
                     Sort.quickSort(shapesCopy, comparator);
                     break;
                 case "z":
-                    Sort.binaryInsertionSort(shapesCopy, comparator); 
+                    Sort.heapSort(shapesCopy, comparator); 
                     break;
                 default:
                     System.out.println("Invalid sort method. Use 'b', 's', 'i', 'm', 'q', or 'z'.");
@@ -334,20 +334,27 @@ public class SortManager
     	int length = shapes.length;
         StringBuilder output = new StringBuilder();
 
-        if (length <= 1000) {
+        if (length <= 1000) 
+        {
             // Print all elements when the array has less than 1000 shapes
-            for (int i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++) 
+            {
                 output.append(shapes[i].toString(compareType)).append("\n");
             }
-        } else {
+        } 
+        else 
+        {
             output.append("First element is: ").append(shapes[0].toString(compareType)).append("\n");
-            for (int i = 1000; i < length; i += 1000) {
-                if (i < length) {
+            for (int i = 1000; i < length; i += 1000) 
+            {
+                if (i < length) 
+                {
                     output.append(i).append("-th element is: ").append(shapes[i].toString(compareType)).append("\n");
                 }
             }
             // Print the second last element if there are at least 2 elements
-            if (length > 1) {
+            if (length > 1) 
+            {
                 output.append("Second last element is: ").append(shapes[length - 2].toString(compareType)).append("\n");
             }
             output.append("Last element is: ").append(shapes[length - 1].toString(compareType)).append("\n");

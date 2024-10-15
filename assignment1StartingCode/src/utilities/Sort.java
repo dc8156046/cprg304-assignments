@@ -18,7 +18,7 @@ import java.util.Comparator;
 -**Selection Sort**: https://www.geeksforgeeks.org/selection-sort-algorithm-2/?ref=shm.
 -**Merge Sort**: https://www.geeksforgeeks.org/merge-sort/?ref=shm.
 -**Quick Sort**: https://www.geeksforgeeks.org/quick-sort-algorithm/?ref=shm.
--**Binary Insertion Sort**: https://www.geeksforgeeks.org/binary-insertion-sort/?ref=header_outind.
+-**Heap Sort**: https://www.geeksforgeeks.org/heap-sort/.
  * 
  */
 public class Sort 
@@ -372,90 +372,131 @@ public class Sort
 	 * @param array the array to be sorted.
 	 * 
 	 */
-	public static <T extends Comparable<? super T>> void binaryInsertionSort(T[] array) 
+	public static <T extends Comparable<? super T>> void heapSort(T[] array) 
 	{
-	    int n = array.length;
+		int n = array.length;
 
-	    for (int i = 1; i < n; i++) 
-	    {
-	        T key = array[i];
-	        int position = binarySearch(array, key, 0, i - 1);
+        // Build a max heap
+        for (int i = n / 2 - 1; i >= 0; i--) 
+        {
+            heapify(array, n, i);
+        }
 
-	        // Move elements to create the space for the key
-	        for (int j = i - 1; j >= position; j--) 
-	        {
-	            array[j + 1] = array[j];
-	        }
-	        array[position] = key;
-	    }
-	}
+        // Extract elements from heap one by one
+        for (int i = n - 1; i > 0; i--) 
+        {
+            // Move current root to end
+            swap(array, 0, i);
 
-	// Binary search function to find the insertion point
-	private static <T extends Comparable<? super T>> int binarySearch(T[] array, T key, int start, int end) 
-	{
-	    while (start <= end) 
-	    {
-	        int mid = (start + end) / 2;
-	        if (array[mid].compareTo(key) > 0) 
-	        {
-	            end = mid - 1;
-	        } 
-	        else 
-	        {
-	            start = mid + 1;
-	        }
-	    }
-	    return start;
+            // Call heapify on the reduced heap
+            heapify(array, i, 0);
+        }
 	}
 	
-
-	/**
-	 * Sorts an array of elements using the binary insertion sort algorithm with a specified comparator.
-	 *
-	 * <p>This algorithm iteratively inserts each element into its correct position 
-	 * by using binary search to find the appropriate index for insertion based on the provided comparator.
-	 *
-	 * @param <T> the type of elements in the array.
-	 * @param array the array to be sorted.
-	 * @param comparator the comparator to determine the order of the elements.
-	 * 
-	 */
-	public static <T> void binaryInsertionSort(T[] array, Comparator<? super T> comparator) 
+	private static <T extends Comparable<? super T>> void heapify(T[] array, int n, int i) 
 	{
-	    int n = array.length;
+        int largest = i;           // Initialize largest as root
+        int left = 2 * i + 1;      // left child index
+        int right = 2 * i + 2;     // right child index
 
-	    for (int i = 1; i < n; i++) 
-	    {
-	        T key = array[i];
-	        int position = binarySearch(array, key, 0, i - 1, comparator);
+        // If left child is larger than root
+        if (left < n && array[left].compareTo(array[largest]) > 0) 
+        {
+            largest = left;
+        }
 
-	        for (int j = i - 1; j >= position; j--) 
-	        {
-	            array[j + 1] = array[j];
-	        }
-	        array[position] = key;
-	    }
-	}
+        // If right child is larger than the largest so far
+        if (right < n && array[right].compareTo(array[largest]) > 0) 
+        {
+            largest = right;
+        }
 
-	
-	private static <T> int binarySearch(T[] array, T key, int start, int end, Comparator<? super T> comparator) 
-	{
-	    while (start <= end) 
-	    {
-	        int mid = (start + end) / 2;
+        // If largest is not root
+        if (largest != i) 
+        {
+            swap(array, i, largest);
 
-	        int comparison = comparator.compare(array[mid], key);
-	        if (comparison > 0) 
-	        {
-	            end = mid - 1; 
-	        } 
-	        else 
-	        {
-	            start = mid + 1;  
-	        }
-	    }
-	    return start; 
-	}
+            // Recursively heapify the affected subtree
+            heapify(array, n, largest);
+        }
+    }
+
+    /**
+     * Helper method to swap two elements in an array.
+     *
+     * @param array the array containing elements to be swapped.
+     * @param i     the index of the first element.
+     * @param j     the index of the second element.
+     */
+    private static <T> void swap(T[] array, int i, int j) 
+    {
+        T temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+
+    /**
+     * Sorts the specified array using the heap sort algorithm with a custom comparator.
+     *
+     * @param <T>        the type of elements in the array.
+     * @param array      the array to be sorted.
+     * @param comparator the comparator to determine the order of the elements.
+     */
+    public static <T> void heapSort(T[] array, Comparator<? super T> comparator) {
+        int n = array.length;
+
+        // Build a heap using the comparator
+        for (int i = n / 2 - 1; i >= 0; i--) 
+        {
+            heapify(array, n, i, comparator);
+        }
+
+        // Extract elements from the heap one by one
+        for (int i = n - 1; i > 0; i--) 
+        {
+            // Move current root to end
+            swap(array, 0, i);
+
+            // Call heapify on the reduced heap
+            heapify(array, i, 0, comparator);
+        }
+    }
+
+    /**
+     * Helper method to maintain the heap property for a subtree rooted at index `i`.
+     *
+     * @param array      the array representation of the heap.
+     * @param n          the size of the heap.
+     * @param i          the index of the root of the subtree.
+     * @param comparator the comparator to determine the order of the elements.
+     */
+    private static <T> void heapify(T[] array, int n, int i, Comparator<? super T> comparator) {
+        int largest = i;          // Initialize largest as root
+        int left = 2 * i + 1;     // left child index
+        int right = 2 * i + 2;    // right child index
+
+        // Use the comparator to find the largest element among root, left, and right
+        if (left < n && comparator.compare(array[left], array[largest]) > 0) 
+        {
+            largest = left;
+        }
+
+        if (right < n && comparator.compare(array[right], array[largest]) > 0) 
+        {
+            largest = right;
+        }
+
+        // If the largest element is not the root
+        if (largest != i) 
+        {
+            swap(array, i, largest);
+
+            // Recursively heapify the affected subtree
+            heapify(array, n, largest, comparator);
+        }
+    }
+
 
 
 }
