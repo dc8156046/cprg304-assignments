@@ -9,7 +9,7 @@ import java.util.Comparator;
  * 
  * <p>This class includes implementations for various sorting techniques,
  * including Bubble Sort, Insertion Sort, Selection Sort, Merge Sort,
- * Quick Sort, and Binary Insertion Sort. 
+ * Quick Sort, and Heap Sort. 
  * 
  * ## Sorting Algorithms References
 
