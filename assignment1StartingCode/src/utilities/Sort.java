@@ -4,6 +4,8 @@ package utilities;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import shapes.Shape;
+
 /**
  * A utility class that provides a series of sorting algorithms.
  * 
@@ -29,7 +31,8 @@ public class Sort
      * @param <T>   The type of elements in the array, which must be comparable
      * @param array The array to be sorted
      */
-	public static <T extends Comparable<? super T>> void bubbleSort(T[] array)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void bubbleSort(Comparable[] array)
 	{
 		int n = array.length;
         boolean swapped;
@@ -41,7 +44,7 @@ public class Sort
                 if (array[j].compareTo(array[j + 1]) > 0) 
                 {
                     // Swap array[j] and array[j + 1]
-                	swap(array, j, j + 1);
+                	swapComparable(array, j, j + 1);
                     swapped = true;
                 }
             }
@@ -57,7 +60,7 @@ public class Sort
      * @param array The array to be sorted
      * @param c     The comparator to determine the order of the elements
      */
-	public static <T> void bubbleSort(T[] array, Comparator<? super T> c)
+	public static void bubbleSort(Shape[] array, Comparator<Shape> c)
 	{
 		int n = array.length;
         boolean swapped;
@@ -87,12 +90,13 @@ public class Sort
 	 * @param array  the array to be sorted, which should contain elements that are not null.
 	 * 
 	 */
-	public static <T extends Comparable<? super T>> void insertionSort(T[] array) 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void insertionSort(Comparable[] array) 
 	{
 	    int n = array.length;
 	    for (int i = 1; i < n; i++) 
 	    {
-	        T key = array[i];
+	    	Comparable key = array[i];
 	        int j = i - 1;
 	        while (j >= 0 && array[j].compareTo(key) > 0) 
 	        {
@@ -113,12 +117,12 @@ public class Sort
 	 * @param c      the comparator used to determine the order of the elements. 
 	 * 
 	 */
-	public static <T> void insertionSort(T[] array, Comparator<? super T> c) 
+	public static void insertionSort(Shape[] array, Comparator<Shape> c) 
 	{
 	    int n = array.length;
 	    for (int i = 1; i < n; i++) 
 	    {
-	        T key = array[i];
+	        Shape key = array[i];
 	        int j = i - 1;
 	        while (j >= 0 && c.compare(array[j], key) > 0) 
 	        {
@@ -137,7 +141,8 @@ public class Sort
 	 * @param array the array to be sorted.
 	 * 
 	 */
-	public static <T extends Comparable<? super T>> void selectionSort(T[] array) 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void selectionSort(Comparable[] array) 
 	{
 	    int n = array.length;
 	    for (int i = 0; i < n - 1; i++) 
@@ -150,7 +155,7 @@ public class Sort
 	                minIndex = j;
 	            }
 	        }
-	        swap(array, minIndex, i);
+	        swapComparable(array, minIndex, i);
 	    }
 	}
 	
@@ -162,7 +167,7 @@ public class Sort
 	 * @param c     the comparator used to determine the order of the elements. 
 	 * 
 	 */
-	public static <T> void selectionSort(T[] array, Comparator<? super T> c) 
+	public static void selectionSort(Shape[] array, Comparator<Shape> c) 
 	{
 	    int n = array.length;
 	    for (int i = 0; i < n - 1; i++) 
@@ -190,19 +195,21 @@ public class Sort
 	 * @param array the array to be sorted.
 	 * 
 	 */
-	public static <T extends Comparable<? super T>> void mergeSort(T[] array) 
+	@SuppressWarnings("rawtypes")
+	public static void mergeSort(Comparable[] array) 
 	{
 	    if (array.length < 2) return;
 	    int mid = array.length / 2;
-	    T[] left = Arrays.copyOfRange(array, 0, mid);
-	    T[] right = Arrays.copyOfRange(array, mid, array.length);
+	    Comparable[] left = Arrays.copyOfRange(array, 0, mid);
+	    Comparable[] right = Arrays.copyOfRange(array, mid, array.length);
 
 	    mergeSort(left);
 	    mergeSort(right);
 	    merge(array, left, right);
 	}
 
-	private static <T extends Comparable<? super T>> void merge(T[] array, T[] left, T[] right) 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private static void merge(Comparable[] array, Comparable[] left, Comparable[] right) 
 	{
 	    int i = 0, j = 0, k = 0;
 	    while (i < left.length && j < right.length) 
@@ -232,19 +239,19 @@ public class Sort
 	 * @param c the comparator used to compare the elements.
 	 * 
 	 */
-	public static <T> void mergeSort(T[] array, Comparator<? super T> c) 
+	public static void mergeSort(Shape[] array, Comparator<Shape> c) 
 	{
 	    if (array.length < 2) return;
 	    int mid = array.length / 2;
-	    T[] left = Arrays.copyOfRange(array, 0, mid);
-	    T[] right = Arrays.copyOfRange(array, mid, array.length);
+	    Shape[] left = Arrays.copyOfRange(array, 0, mid);
+	    Shape[] right = Arrays.copyOfRange(array, mid, array.length);
 
 	    mergeSort(left, c);
 	    mergeSort(right, c);
 	    merge(array, left, right, c);
 	}
 
-	private static <T> void merge(T[] array, T[] left, T[] right, Comparator<? super T> c) 
+	private static void merge(Shape[] array, Shape[] left, Shape[] right, Comparator<Shape> c) 
 	{
 	    int i = 0, j = 0, k = 0;
 	    while (i < left.length && j < right.length) 
@@ -272,12 +279,14 @@ public class Sort
 	 * @param array the array to be sorted.
 	 *
 	 */
-	public static <T extends Comparable<? super T>> void quickSort(T[] array) 
+	@SuppressWarnings({ "rawtypes" })
+	public static void quickSort(Comparable[] array) 
 	{
 	    quickSort(array, 0, array.length - 1);
 	}
 
-	private static <T extends Comparable<? super T>> void quickSort(T[] array, int low, int high) 
+	@SuppressWarnings("rawtypes")
+	private static void quickSort(Comparable[] array, int low, int high) 
 	{
 	    if (low < high) 
 	    {
@@ -287,19 +296,20 @@ public class Sort
 	    }
 	}
 
-	private static <T extends Comparable<? super T>> int partition(T[] array, int low, int high) 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private static int partition(Comparable[] array, int low, int high) 
 	{
-	    T pivot = array[high];
+		Comparable pivot = array[high];
 	    int i = low - 1;
 	    for (int j = low; j < high; j++) 
 	    {
 	        if (array[j].compareTo(pivot) <= 0) 
 	        {
 	            i++;
-	            swap(array, i, j);
+	            swapComparable(array, i, j);
 	        }
 	    }
-	    swap(array, i + 1, high);
+	    swapComparable(array, i + 1, high);
 	    return i + 1;
 	}
 	
@@ -315,12 +325,12 @@ public class Sort
 	 * @param c the comparator used to compare the elements.
 	 * 
 	 */
-	public static <T> void quickSort(T[] array, Comparator<? super T> c) 
+	public static void quickSort(Shape[] array, Comparator<Shape> c) 
 	{
 	    quickSort(array, 0, array.length - 1, c);
 	}
 
-	private static <T> void quickSort(T[] array, int low, int high, Comparator<? super T> c) 
+	private static void quickSort(Shape[] array, int low, int high, Comparator<Shape> c) 
 	{
 	    if (low < high) 
 	    {
@@ -330,9 +340,9 @@ public class Sort
 	    }
 	}
 
-	private static <T> int partition(T[] array, int low, int high, Comparator<? super T> c) 
+	private static int partition(Shape[] array, int low, int high, Comparator<Shape> c) 
 	{
-	    T pivot = array[high];
+		Shape pivot = array[high];
 	    int i = low - 1;
 	    for (int j = low; j < high; j++) 
 	    {
@@ -356,7 +366,8 @@ public class Sort
 	 * @param array the array to be sorted.
 	 * 
 	 */
-	public static <T extends Comparable<? super T>> void heapSort(T[] array) 
+	@SuppressWarnings("rawtypes")
+	public static void heapSort(Comparable[] array) 
 	{
 		int n = array.length;
 
@@ -370,14 +381,15 @@ public class Sort
         for (int i = n - 1; i > 0; i--) 
         {
             // Move current root to end
-            swap(array, 0, i);
+        	swapComparable(array, 0, i);
 
             // Call heapify on the reduced heap
             heapify(array, i, 0);
         }
 	}
 	
-	private static <T extends Comparable<? super T>> void heapify(T[] array, int n, int i) 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private static void heapify(Comparable[] array, int n, int i) 
 	{
         int largest = i;           // Initialize largest as root
         int left = 2 * i + 1;      // left child index
@@ -398,23 +410,38 @@ public class Sort
         // If largest is not root
         if (largest != i) 
         {
-            swap(array, i, largest);
+        	swapComparable(array, i, largest);
 
             // Recursively heapify the affected subtree
             heapify(array, n, largest);
         }
     }
-
-    /**
-     * Helper method to swap two elements in an array.
+	
+	/**
+     * Helper method to swap two elements in an Comparable array.
      *
      * @param array the array containing elements to be swapped.
      * @param i     the index of the first element.
      * @param j     the index of the second element.
      */
-    private static <T> void swap(T[] array, int i, int j) 
+    @SuppressWarnings("rawtypes")
+	private static void swapComparable(Comparable[] array, int i, int j) 
     {
-        T temp = array[i];
+    	Comparable temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+	
+    /**
+     * Helper method to swap two elements in an Shape array.
+     *
+     * @param array the array containing elements to be swapped.
+     * @param i     the index of the first element.
+     * @param j     the index of the second element.
+     */
+    private static void swap(Shape[] array, int i, int j) 
+    {
+    	Shape temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
@@ -427,7 +454,7 @@ public class Sort
      * @param array      the array to be sorted.
      * @param comparator the comparator to determine the order of the elements.
      */
-    public static <T> void heapSort(T[] array, Comparator<? super T> comparator) {
+    public static void heapSort(Shape[] array, Comparator<Shape> comparator) {
         int n = array.length;
 
         // Build a heap using the comparator
@@ -455,7 +482,7 @@ public class Sort
      * @param i          the index of the root of the subtree.
      * @param comparator the comparator to determine the order of the elements.
      */
-    private static <T> void heapify(T[] array, int n, int i, Comparator<? super T> comparator) {
+    private static void heapify(Shape[] array, int n, int i, Comparator<Shape> comparator) {
         int largest = i;          // Initialize largest as root
         int left = 2 * i + 1;     // left child index
         int right = 2 * i + 2;    // right child index
