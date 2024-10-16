@@ -43,12 +43,14 @@ Example:
 - q 	Quick Sort
 - z 	Heap Sort
 
+Sort with comparable:
+- "h" for sorting by height.
+
 If you want to sort with a custom comparator (e.g., sorting shapes by volume or base area):
 - The program provides options to input custom comparator types, such as:
     - "v" for sorting by volume.
     - "a" for sorting by base area.
-    - "h" for sorting by height.
-
+    
 ### Sorting a Large Number of Items
 The program can handle large arrays for sorting, but certain algorithms like Bubble Sort may be inefficient for very large datasets (e.g., 1,000,000 elements). It is recommended to use `Merge Sort` or `Quick Sort` for large data sets.
 
