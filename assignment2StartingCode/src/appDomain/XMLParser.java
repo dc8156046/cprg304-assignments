@@ -62,53 +62,61 @@ public class XMLParser {
     }
     
     // Method to process each line for tags
-    private void processLine(String line, int lineNumber) {
-        boolean insideTag = false;
-        StringBuilder currentTag = new StringBuilder();
-        boolean isClosingTag = false;
+	private void processLine(String line, int lineNumber) {
+	    boolean insideTag = false;
+	    StringBuilder currentTag = new StringBuilder();
+	    boolean isClosingTag = false;
+	
+	    // basic tag check
+	    if (!line.contains("<") || !line.contains(">")) {
+	        errorQueue.enqueue("Error at line " + lineNumber + ": Invalid XML format\n\t" + line);
+	        return;
+	    }
+	
+	    for (int i = 0; i < line.length(); i++) {
+	        char c = line.charAt(i);
+	
+	        if (c == '<') {
+	            insideTag = true;
+	            currentTag = new StringBuilder();
+	            isClosingTag = false;
+	        } else if (c == '>') {
+	            insideTag = false;
+	            String tag = currentTag.toString().trim();
+	            
+	            if (!tag.isEmpty()) {
+	                if (isClosingTag) {
+	                    if (tagStack.isEmpty()) {
+	                        errorQueue.enqueue("Error at line " + lineNumber + ": Unexpected closing tag\n\t" + line);
+	                    } else {
+	                        String lastOpenedTag = tagStack.pop();
+	                        if (!lastOpenedTag.equals(tag)) {
+	                            errorQueue.enqueue("Error at line " + lineNumber + ": Mismatched tags. Expected </" 
+	                                + lastOpenedTag + ">, found </" + tag + ">\n\t" + line);
+	                            tagStack.push(lastOpenedTag);
+	                        }
+	                    }
+	                } else if (!tag.endsWith("/")) {
+	                    tag = tag.split(" ")[0];
+	                    // invalid tag
+	                    if (!tag.matches("^[a-zA-Z][a-zA-Z0-9_]*$")) {
+	                        errorQueue.enqueue("Error at line " + lineNumber + ": Invalid tag name\n\t" + line);
+	                    } else {
+	                        tagStack.push(tag);
+	                    }
+	                }
+	            }
+	        } else if (insideTag) {
+	            if (c == '/' && currentTag.length() == 0) {
+	                isClosingTag = true;
+	            } else {
+	                currentTag.append(c);
+	            }
+	        }
+	    }
+	}
 
-        for (int i = 0; i < line.length(); i++) {
-            char c = line.charAt(i);
 
-            if (c == '<') {
-                insideTag = true;
-                currentTag = new StringBuilder(); // Reset current tag
-                isClosingTag = false;
-
-            } else if (c == '>') {
-                insideTag = false;
-                String tag = currentTag.toString().trim();
-                
-                //tag = tag.split(" ")[0];
-                //System.out.println(tag);
-                //tagStack.push(tag);
-                if (!tag.isEmpty()) {
-                    if (isClosingTag) {
-                    	String lastOpenedTag = tagStack.pop();
-                        //System.out.println(lastOpenedTag);
-                        //System.out.println(tag);
-                        if (!lastOpenedTag.equals(tag)) {
-                            errorQueue.enqueue("Error at line " + lineNumber + "\r\t" + lastOpenedTag);
-                            tagStack.push(lastOpenedTag); // Re-add the tag to stack if not matched
-                        }
-                    } else if (!tag.endsWith("/")) { // Opening tag (not self-closing)
-                    	tag = tag.split(" ")[0]; // Remove attributes (only the tag name)
-                    	//System.out.println(tag);
-                        tagStack.push(tag);
-                    }
-                }
-
-            } else if (insideTag) {
-                if (c == '/' && currentTag.length() == 0) {
-                    isClosingTag = true; // Detect a closing tag
-                } else {
-                    currentTag.append(c); // Append to current tag content
-                }
-            }
-        }
-//        Iterator<String> it = tagStack.iterator();
-//        System.out.println("Current tagStack: " + it.next());
-    }
     
     private void printErrors() {
 	    System.out.println("=========================ERROR LOG====================");
