@@ -8,7 +8,33 @@ import exceptions.EmptyQueueException;
 import implementations.MyQueue;
 import implementations.MyStack;
 
-
+/**
+ * The XMLParser class provides functionality to parse XML documents, check for syntax errors,
+ * and print error messages for invalid tags or mismatched tags.
+ * It uses a custom stack and queue implementation to store tags and errors.
+ * 
+ * The class follows these steps:
+ * - Reads the XML document line by line.
+ * - Processes tags within the document.
+ * - Detects errors, such as mismatched tags, invalid tags, and unclosed tags.
+ * - Outputs the error messages in the order they appear.
+ * 
+ * The XMLParser supports the following features:
+ * - Skipping XML declarations and empty lines.
+ * - Checking for mismatched and invalid tags.
+ * - Detecting self-closing tags and empty tags.
+ * - Printing error logs in the correct format.
+ * 
+ * Example usage:
+ * <pre>
+ *     XMLParser parser = new XMLParser();
+ *     parser.parse("sample.xml");
+ * </pre>
+ * 
+ * @see implementations.MyStack
+ * @see implementations.MyQueue
+ * @see exceptions.EmptyQueueException
+ */
 public class XMLParser {
 	
 	// Stack to store XML tags
@@ -17,6 +43,13 @@ public class XMLParser {
     // Queue to store error messages
     private MyQueue<String> errorQueue = new MyQueue<>(); 
 
+	/**
+     * Parses an XML document from the given file and identifies any syntax errors.
+     * The method processes the XML line by line, checks for invalid tags or mismatched 
+     * tags, and collects error messages.
+     * 
+     * @param fileName The name of the XML file to parse.
+     */
     public void parse(String fileName) {
         File xmlFile = new File(fileName);
        
@@ -61,7 +94,12 @@ public class XMLParser {
        
     }
     
-    // Method to process each line for tags
+     /**
+     * Processes each line of the XML document to identify tags and check for mismatched tags.
+     * 
+     * @param line The XML line to process.
+     * @param lineNumber The line number in the XML document.
+     */
 	private void processLine(String line, int lineNumber) {
 	    boolean insideTag = false;
 	    StringBuilder currentTag = new StringBuilder();
@@ -117,7 +155,10 @@ public class XMLParser {
 	}
 
 
-    
+    /**
+     * Prints the error log to the console. This method will display all errors found during 
+     * the XML parsing process, or indicate that no errors were found.
+     */
     private void printErrors() {
 	    System.out.println("=========================ERROR LOG====================");
 	    // Display all errors in the queue after parsing
@@ -134,7 +175,11 @@ public class XMLParser {
 	    }
     }
 
-
+	 /**
+     * Main method that executes the XML parser with a command-line argument.
+     * 
+     * @param args Command-line arguments, expects the path of the XML file.
+     */
     public static void main(String[] args) {
         if (args.length < 1) {
             System.out.println("Usage: java -jar Parser.jar <XMLFile>");
